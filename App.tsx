@@ -1,17 +1,15 @@
 
 import React, { useState, useEffect } from 'react';
-import { ViewState, Pet, Renter } from './types';
-import { MOCK_PETS, MOCK_RENTERS } from './constants';
-import Navbar from './components/Navbar';
-import PetCard from './components/PetCard';
-import WalkerCard from './components/WalkerCard';
-import { OwnerForm, RenterForm } from './components/RegisterForms';
+import { ViewState, Pet, Renter } from './types.ts';
+import { MOCK_PETS, MOCK_RENTERS } from './constants.tsx';
+import Navbar from './components/Navbar.tsx';
+import PetCard from './components/PetCard.tsx';
+import WalkerCard from './components/WalkerCard.tsx';
+import { OwnerForm, RenterForm } from './components/RegisterForms.tsx';
 
 const App: React.FC = () => {
-  // 將主題狀態儲存於 localStorage，預設為深色模式 (true)
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     const saved = localStorage.getItem('theme');
-    // 如果沒有儲存過的設定，預設回傳 true (深色模式)
     return saved === null ? true : saved === 'dark';
   });
 
@@ -160,7 +158,7 @@ const App: React.FC = () => {
                  { icon: 'fa-calendar-alt', color: 'green', title: '彈性預約', desc: '無論是一次性散步還是長期陪伴，都能彈性規劃。' }
                ].map((item, idx) => (
                  <div key={idx} className={`p-8 rounded-[2rem] shadow-sm border transition-all hover:shadow-lg ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-gray-100'}`}>
-                    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 ${isDarkMode ? `bg-${item.color}-900/20 text-${item.color}-400` : `bg-${item.color}-100 text-${item.color}-600`}`}>
+                    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 ${isDarkMode ? `bg-orange-900/20 text-orange-400` : `bg-orange-100 text-orange-600`}`}>
                       <i className={`fas ${item.icon} fa-2x`}></i>
                     </div>
                     <h3 className={`text-xl font-bold mb-3 text-center ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>{item.title}</h3>
@@ -215,7 +213,7 @@ const App: React.FC = () => {
 
         {view === 'REGISTER_PET' && (
           <div className="pt-4 animate-scale-in">
-             <OwnerForm onSubmit={handleOwnerSubmit} />
+             <OwnerForm onSubmit={handleOwnerSubmit} isDarkMode={isDarkMode} />
              <div className="mt-8 text-center">
                 <button onClick={() => navigateTo('HOME')} className="text-gray-500 hover:text-orange-500 text-sm font-medium transition-colors">
                   <i className="fas fa-arrow-left mr-2"></i> 返回首頁
@@ -226,7 +224,7 @@ const App: React.FC = () => {
 
         {view === 'REGISTER_RENTER' && (
           <div className="pt-4 animate-scale-in">
-             <RenterForm onSubmit={handleRenterSubmit} />
+             <RenterForm onSubmit={handleRenterSubmit} isDarkMode={isDarkMode} />
              <div className="mt-8 text-center">
                 <button onClick={() => navigateTo('HOME')} className="text-gray-500 hover:text-blue-500 text-sm font-medium transition-colors">
                   <i className="fas fa-arrow-left mr-2"></i> 返回首頁
@@ -271,13 +269,7 @@ const App: React.FC = () => {
         .animate-scale-in {
           animation: scaleIn 0.3s ease-out forwards;
         }
-        /* Custom dynamic classes for dark mode icons that tailwind JIT might miss */
-        .bg-orange-900\/20 { background-color: rgb(124 45 18 / 0.2); }
-        .bg-blue-900\/20 { background-color: rgb(30 58 138 / 0.2); }
-        .bg-green-900\/20 { background-color: rgb(20 83 45 / 0.2); }
         .text-orange-400 { color: #fb923c; }
-        .text-blue-400 { color: #60a5fa; }
-        .text-green-400 { color: #4ade80; }
       `}</style>
     </div>
   );

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import App from './App.tsx';
 
 // 確保在 DOM 載入後才執行掛載
 const rootElement = document.getElementById('root');
