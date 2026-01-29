@@ -16,11 +16,12 @@ const App: React.FC = () => {
   const [view, setView] = useState<ViewState>('HOME');
   const [pets, setPets] = useState<Pet[]>(MOCK_PETS);
   const [renters, setRenters] = useState<Renter[]>(MOCK_RENTERS);
-  const [notification, setNotification] = useState<{message: string, type: 'success' | 'info'} | null>(null);
+  const [notification, setNotification] = useState<{ message: string, type: 'success' | 'info' } | null>(null);
 
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '');
+      // Support both "#pets" and "#/pets" formats
+      const hash = window.location.hash.replace(/^#\/?/, '');
       const routes: Record<string, ViewState> = {
         'pets': 'PETS_LIST',
         'walkers': 'WALKERS_LIST',
@@ -30,6 +31,7 @@ const App: React.FC = () => {
       setView(routes[hash] || 'HOME');
     };
     window.addEventListener('hashchange', handleHashChange);
+    // Call immediately to set initial state
     handleHashChange();
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
@@ -43,12 +45,12 @@ const App: React.FC = () => {
   };
 
   const navigateTo = (newView: ViewState) => {
-    const hashes: Record<ViewState, string> = { 
-      'PETS_LIST': '#pets', 
-      'WALKERS_LIST': '#walkers', 
-      'REGISTER_PET': '#register-pet', 
-      'REGISTER_RENTER': '#register-renter', 
-      'HOME': '#home' 
+    const hashes: Record<ViewState, string> = {
+      'PETS_LIST': '#pets',
+      'WALKERS_LIST': '#walkers',
+      'REGISTER_PET': '#register-pet',
+      'REGISTER_RENTER': '#register-renter',
+      'HOME': '#home'
     };
     window.location.hash = hashes[newView];
   };
@@ -61,7 +63,7 @@ const App: React.FC = () => {
   return (
     <div className={`min-h-screen pb-20 transition-colors duration-300 ${isDarkMode ? 'bg-slate-950 text-white' : 'bg-gray-50 text-gray-900'}`}>
       <Navbar currentView={view} onNavigate={navigateTo} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
-      
+
       {notification && (
         <div className="fixed top-24 right-4 z-[100] px-6 py-3 rounded-xl shadow-2xl flex items-center space-x-3 text-white font-bold backdrop-blur-md ring-1 ring-white/20 bg-slate-800 animate-bounce-in">
           <div className={`w-2 h-2 rounded-full ${notification.type === 'success' ? 'bg-green-400' : 'bg-blue-400'}`}></div>
@@ -106,20 +108,20 @@ const App: React.FC = () => {
 
         {(view === 'REGISTER_PET' || view === 'REGISTER_RENTER') && (
           <div className="pt-4">
-             {view === 'REGISTER_PET' ? 
+            {view === 'REGISTER_PET' ?
               <OwnerForm onSubmit={(data) => {
                 const newPet = { id: Date.now().toString(), ...data, imageUrl: `https://picsum.photos/seed/${data.name}/400/300`, ownerName: '您自己' };
                 setPets([newPet, ...pets]);
                 showNotification('刊登成功');
                 navigateTo('PETS_LIST');
-              }} isDarkMode={isDarkMode} /> : 
+              }} isDarkMode={isDarkMode} /> :
               <RenterForm onSubmit={(data) => {
                 const newRenter = { id: Date.now().toString(), ...data, isVerified: true, imageUrl: `https://picsum.photos/seed/${data.name}/150/150`, rating: 5.0 };
                 setRenters([newRenter, ...renters]);
                 showNotification('加入成功');
                 navigateTo('WALKERS_LIST');
               }} isDarkMode={isDarkMode} />
-             }
+            }
           </div>
         )}
       </main>
