@@ -9,8 +9,13 @@ import { OwnerForm, RenterForm } from './components/RegisterForms.tsx';
 
 const App: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
-    const saved = localStorage.getItem('theme');
-    return saved === null ? true : saved === 'dark';
+    try {
+      const saved = localStorage.getItem('theme');
+      return saved === null ? true : saved === 'dark';
+    } catch (e) {
+      // Fallback if localStorage is disabled/inaccessible
+      return true;
+    }
   });
 
   const [view, setView] = useState<ViewState>('HOME');
@@ -39,7 +44,12 @@ const App: React.FC = () => {
   const toggleDarkMode = () => {
     setIsDarkMode(prev => {
       const newVal = !prev;
-      localStorage.setItem('theme', newVal ? 'dark' : 'light');
+      try {
+        localStorage.setItem('theme', newVal ? 'dark' : 'light');
+      } catch (e) {
+        // Ignore write error if storage is full or disabled
+        console.warn('Unable to save theme preference', e);
+      }
       return newVal;
     });
   };
