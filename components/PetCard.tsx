@@ -12,7 +12,7 @@ const PetCard: React.FC<PetCardProps> = ({ pet, onBook, isDarkMode }) => {
   return (
     <div className={`rounded-[1.5rem] overflow-hidden hover:scale-[1.02] transition-all duration-300 ${isDarkMode ? 'bg-slate-800 shadow-clay-dark' : 'bg-white shadow-clay'}`}>
       <div className="relative h-56 group">
-        <img src={pet.imageUrl} alt={pet.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+        <img src={pet.imageUrl} alt={pet.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" decoding="async" />
         <div className={`absolute top-4 right-4 backdrop-blur-md px-4 py-1.5 rounded-full text-sm font-bold shadow-sm border border-white/20 ${isDarkMode ? 'bg-slate-900/80 text-orange-400' : 'bg-white/90 text-primary'}`}>
           {pet.breed}
         </div>
@@ -49,4 +49,4 @@ const PetCard: React.FC<PetCardProps> = ({ pet, onBook, isDarkMode }) => {
   );
 };
 
-export default PetCard;
+export default React.memo(PetCard);

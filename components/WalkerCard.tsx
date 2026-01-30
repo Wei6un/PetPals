@@ -12,7 +12,7 @@ const WalkerCard: React.FC<WalkerCardProps> = ({ walker, onContact, isDarkMode }
   return (
     <div className={`rounded-[1.5rem] p-6 flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6 transition-all duration-300 ${isDarkMode ? 'bg-slate-800 shadow-clay-dark' : 'bg-white shadow-clay'}`}>
       <div className="relative flex-shrink-0">
-        <img src={walker.imageUrl} alt={walker.name} className={`w-24 h-24 rounded-full object-cover ring-4 ${isDarkMode ? 'ring-slate-700' : 'ring-orange-100'}`} />
+        <img src={walker.imageUrl} alt={walker.name} className={`w-24 h-24 rounded-full object-cover ring-4 ${isDarkMode ? 'ring-slate-700' : 'ring-orange-100'}`} loading="lazy" decoding="async" />
         {walker.isVerified && (
           <div className="absolute -bottom-1 -right-1 bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center border-2 border-white shadow-sm" title="通過實名驗證">
             <i className="fas fa-check text-sm"></i>
@@ -49,4 +49,4 @@ const WalkerCard: React.FC<WalkerCardProps> = ({ walker, onContact, isDarkMode }
   );
 };
 
-export default WalkerCard;
+export default React.memo(WalkerCard);

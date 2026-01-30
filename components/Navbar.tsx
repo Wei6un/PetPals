@@ -27,8 +27,8 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, isDarkMode, to
                 key={viewName}
                 onClick={() => onNavigate(viewName as ViewState)}
                 className={`px-6 py-2 rounded-xl text-sm font-bold transition-all duration-300 ${currentView === viewName
-                    ? 'bg-white shadow-sm text-primary scale-105'
-                    : (isDarkMode ? 'text-slate-400 hover:text-white' : 'text-gray-500 hover:text-primary')
+                  ? 'bg-white shadow-sm text-primary scale-105'
+                  : (isDarkMode ? 'text-slate-400 hover:text-white' : 'text-gray-500 hover:text-primary')
                   }`}
               >
                 {viewName === 'PETS_LIST' ? '找寵物玩' : '找陪伴者'}
@@ -65,4 +65,4 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, isDarkMode, to
   );
 };
 
-export default Navbar;
+export default React.memo(Navbar);
