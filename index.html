@@ -7,19 +7,54 @@
   <title>PetPals - 寵物陪伴預約平台</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Nunito', 'sans-serif'],
+            display: ['Fredoka', 'sans-serif'],
+          },
+          colors: {
+            primary: '#F97316',
+            secondary: '#FB923C',
+            cta: '#2563EB',
+            'warm-bg': '#FFF7ED',
+            'text-main': '#9A3412',
+          },
+          boxShadow: {
+            'clay': '8px 8px 16px #d1d5db, -8px -8px 16px #ffffff',
+            'clay-dark': '8px 8px 16px #0f172a, -8px -8px 16px #334155',
+            'clay-sm': '4px 4px 8px #d1d5db, -4px -4px 8px #ffffff',
+            'clay-inset': 'inset 4px 4px 8px #d1d5db, inset -4px -4px 8px #ffffff',
+          }
+        }
+      }
+    }
+  </script>
   <style>
     body {
-      font-family: 'Noto Sans TC', sans-serif;
+      font-family: 'Nunito', sans-serif;
       margin: 0;
     }
-
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Fredoka', sans-serif;
+    }
     #root {
       min-height: 100vh;
     }
+    .clay-card {
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 8px 8px 16px #d1d5db, -8px -8px 16px #ffffff; /* Fallback */
+    }
   </style>
 
-<body class="bg-slate-950 transition-colors duration-300">
+<body class="bg-warm-bg text-text-main transition-colors duration-300">
   <div id="root"></div>
   <script type="module" src="./index.tsx"></script>
 </body>

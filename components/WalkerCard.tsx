@@ -10,38 +10,38 @@ interface WalkerCardProps {
 
 const WalkerCard: React.FC<WalkerCardProps> = ({ walker, onContact, isDarkMode }) => {
   return (
-    <div className={`rounded-2xl shadow-md p-6 flex items-center space-x-6 border transition-all duration-300 ${isDarkMode ? 'bg-slate-800 border-slate-700 shadow-slate-900/50' : 'bg-white border-gray-100 hover:border-orange-200'}`}>
+    <div className={`rounded-[1.5rem] p-6 flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6 transition-all duration-300 ${isDarkMode ? 'bg-slate-800 shadow-clay-dark' : 'bg-white shadow-clay'}`}>
       <div className="relative flex-shrink-0">
-        <img src={walker.imageUrl} alt={walker.name} className={`w-20 h-20 rounded-full object-cover ring-4 ${isDarkMode ? 'ring-slate-700' : 'ring-orange-50'}`} />
+        <img src={walker.imageUrl} alt={walker.name} className={`w-24 h-24 rounded-full object-cover ring-4 ${isDarkMode ? 'ring-slate-700' : 'ring-orange-100'}`} />
         {walker.isVerified && (
-          <div className="absolute -bottom-1 -right-1 bg-blue-500 text-white w-6 h-6 rounded-full flex items-center justify-center border-2 border-white" title="通過實名驗證">
-            <i className="fas fa-check text-[10px]"></i>
+          <div className="absolute -bottom-1 -right-1 bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center border-2 border-white shadow-sm" title="通過實名驗證">
+            <i className="fas fa-check text-sm"></i>
           </div>
         )}
       </div>
-      <div className="flex-grow">
-        <div className="flex justify-between items-start">
+      <div className="flex-grow text-center sm:text-left w-full">
+        <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start mb-2">
           <div>
-            <h3 className={`text-lg font-bold flex items-center ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
+            <h3 className={`text-xl font-black font-display flex items-center justify-center sm:justify-start ${isDarkMode ? 'text-white' : 'text-text-main'}`}>
               {walker.name}
-              <span className={`ml-2 px-2 py-0.5 text-[10px] rounded-full uppercase ${isDarkMode ? 'bg-slate-700 text-slate-400' : 'bg-gray-100 text-gray-500'}`}>
+              <span className={`ml-3 px-3 py-1 text-xs font-bold rounded-lg uppercase tracking-wide ${isDarkMode ? 'bg-slate-700 text-slate-300' : 'bg-gray-100 text-gray-500'}`}>
                 {walker.gender} / {walker.age}歲
               </span>
             </h3>
-            <div className="flex items-center text-yellow-500 text-sm mt-1">
+            <div className="flex items-center justify-center sm:justify-start text-yellow-400 text-sm mt-2">
               <i className="fas fa-star mr-1"></i>
-              <span className="font-bold">{walker.rating}</span>
-              <span className={`ml-1 font-normal ${isDarkMode ? 'text-slate-500' : 'text-gray-400'}`}>(12 則評價)</span>
+              <span className="font-black text-lg mr-1">{walker.rating}</span>
+              <span className={`font-medium ${isDarkMode ? 'text-slate-500' : 'text-gray-400'}`}>(12 則評價)</span>
             </div>
           </div>
-          <button 
+          <button
             onClick={() => onContact(walker)}
-            className="text-orange-500 hover:text-orange-700 font-semibold text-sm transition-colors"
+            className={`mt-4 sm:mt-0 font-bold text-sm transition-all px-4 py-2 rounded-xl ${isDarkMode ? 'text-orange-400 hover:bg-slate-700' : 'text-primary hover:bg-orange-50'}`}
           >
-            聯繫詳談
+            聯繫詳談 <i className="fas fa-chevron-right ml-1"></i>
           </button>
         </div>
-        <p className={`text-sm mt-2 line-clamp-2 leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-gray-600'}`}>
+        <p className={`text-base mt-2 line-clamp-2 leading-relaxed font-medium ${isDarkMode ? 'text-slate-400' : 'text-gray-500/90'}`}>
           {walker.bio}
         </p>
       </div>
