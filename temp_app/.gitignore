@@ -3,14 +3,6 @@
 # dependencies
 node_modules/
 
-# agent
-.agent/
-.agents/
-.claude/
-.gemini/
-.github/
-.vscode/
-
 # Expo
 .expo/
 dist/
@@ -49,5 +41,3 @@ app-example
 # generated native folders
 /ios
 /android
-
-.cursorrules

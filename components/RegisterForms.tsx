@@ -1,200 +1,205 @@
-
+import { FontAwesome } from '@expo/vector-icons';
+import { useColorScheme } from 'nativewind';
 import React, { useState } from 'react';
+import { Pressable, Text, TextInput, View } from 'react-native';
+import { Button } from './ui/Button';
 
 interface OwnerFormProps {
-  onSubmit: (data: any) => void;
-  isDarkMode?: boolean;
+    onSubmit: (data: any) => void;
 }
 
-export const OwnerForm: React.FC<OwnerFormProps> = ({ onSubmit, isDarkMode }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    breed: '',
-    age: '',
-    dietaryNotes: '',
-    location: '',
-  });
+export const OwnerForm: React.FC<OwnerFormProps> = ({ onSubmit }) => {
+    const { colorScheme } = useColorScheme();
+    const isDarkMode = colorScheme === 'dark';
+    const [formData, setFormData] = useState({
+        name: '',
+        breed: '',
+        age: '',
+        dietaryNotes: '',
+        location: '',
+    });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit(formData);
-  };
+    const inputClass = `w-full px-5 py-4 rounded-2xl font-medium mb-4 border-2 border-transparent ${isDarkMode ? 'bg-slate-800 text-white placeholder-slate-500' : 'bg-gray-50 text-gray-900 placeholder-gray-400'}`;
+    const labelClass = `text-sm font-bold mb-2 ml-1 ${isDarkMode ? 'text-slate-300' : 'text-gray-600'}`;
 
-  const inputClass = `w-full px-5 py-4 rounded-2xl outline-none transition-all font-medium ${isDarkMode ? 'bg-slate-800 text-white shadow-clay-inset placeholder-slate-500' : 'bg-gray-50 text-gray-900 shadow-clay-inset placeholder-gray-400 focus:shadow-none focus:ring-4 focus:ring-orange-100'} border-2 border-transparent focus:border-orange-300`;
-  const labelClass = `block text-sm font-bold mb-2 ml-1 ${isDarkMode ? 'text-slate-300' : 'text-gray-600'}`;
+    return (
+        <View className={`rounded-[32px] p-6 mb-6 ${isDarkMode ? 'bg-slate-900' : 'bg-white'}`}>
+            <View className="items-center mb-8">
+                <View className={`w-20 h-20 rounded-full mb-4 justify-center items-center ${isDarkMode ? 'bg-orange-900/40' : 'bg-orange-50'}`}>
+                    <FontAwesome name="paw" size={32} color={isDarkMode ? '#FB923C' : '#F97316'} />
+                </View>
+                <Text className={`text-2xl font-black font-display mb-2 text-center ${isDarkMode ? 'text-white' : 'text-text-main'}`}>
+                    刊登您的寶貝資訊
+                </Text>
+                <Text className={`text-base font-medium text-center ${isDarkMode ? 'text-slate-400' : 'text-gray-500'}`}>
+                    填寫詳細資料，為您的寵物找到最合適的玩伴
+                </Text>
+            </View>
 
-  return (
-    <div className={`rounded-[2rem] p-8 max-w-2xl mx-auto transition-colors duration-300 ${isDarkMode ? 'bg-slate-900 shadow-clay-dark' : 'bg-white shadow-clay'}`}>
-      <div className="text-center mb-10">
-        <div className={`inline-flex items-center justify-center w-20 h-20 rounded-full mb-6 ${isDarkMode ? 'bg-orange-900/40 text-orange-400 shadow-clay-inset' : 'bg-orange-50 text-primary shadow-clay'}`}>
-          <i className="fas fa-dog fa-3x transform -rotate-6"></i>
-        </div>
-        <h2 className={`text-3xl font-black font-display mb-3 ${isDarkMode ? 'text-white' : 'text-text-main'}`}>刊登您的寶貝資訊</h2>
-        <p className={`text-lg font-medium ${isDarkMode ? 'text-slate-400' : 'text-gray-500'}`}>填寫詳細資料，為您的寵物找到最合適的玩伴</p>
-      </div>
+            <View className="space-y-4">
+                <View>
+                    <Text className={labelClass}>寵物姓名</Text>
+                    <TextInput
+                        className={inputClass}
+                        placeholder="例如：麻糬"
+                        placeholderTextColor={isDarkMode ? '#64748b' : '#9ca3af'}
+                        value={formData.name}
+                        onChangeText={t => setFormData({ ...formData, name: t })}
+                    />
+                </View>
+                <View>
+                    <Text className={labelClass}>品種</Text>
+                    <TextInput
+                        className={inputClass}
+                        placeholder="例如：柴犬"
+                        placeholderTextColor={isDarkMode ? '#64748b' : '#9ca3af'}
+                        value={formData.breed}
+                        onChangeText={t => setFormData({ ...formData, breed: t })}
+                    />
+                </View>
+                <View>
+                    <Text className={labelClass}>年紀 (歲)</Text>
+                    <TextInput
+                        className={inputClass}
+                        placeholder="數字"
+                        keyboardType="numeric"
+                        placeholderTextColor={isDarkMode ? '#64748b' : '#9ca3af'}
+                        value={formData.age}
+                        onChangeText={t => setFormData({ ...formData, age: t })}
+                    />
+                </View>
+                <View>
+                    <Text className={labelClass}>所在地區</Text>
+                    <TextInput
+                        className={inputClass}
+                        placeholder="例如：台北市大安區"
+                        placeholderTextColor={isDarkMode ? '#64748b' : '#9ca3af'}
+                        value={formData.location}
+                        onChangeText={t => setFormData({ ...formData, location: t })}
+                    />
+                </View>
+                <View>
+                    <Text className={labelClass}>飲食注意事項</Text>
+                    <TextInput
+                        className={`${inputClass} h-32`}
+                        multiline
+                        textAlignVertical="top"
+                        placeholder="例如：對什麼過敏、固定餵食量等..."
+                        placeholderTextColor={isDarkMode ? '#64748b' : '#9ca3af'}
+                        value={formData.dietaryNotes}
+                        onChangeText={t => setFormData({ ...formData, dietaryNotes: t })}
+                    />
+                </View>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className={labelClass}>寵物姓名</label>
-            <input
-              required
-              type="text"
-              className={inputClass}
-              placeholder="例如：麻糬"
-              value={formData.name}
-              onChange={e => setFormData({ ...formData, name: e.target.value })}
-            />
-          </div>
-          <div>
-            <label className={labelClass}>品種</label>
-            <input
-              required
-              type="text"
-              className={inputClass}
-              placeholder="例如：柴犬"
-              value={formData.breed}
-              onChange={e => setFormData({ ...formData, breed: e.target.value })}
-            />
-          </div>
-          <div>
-            <label className={labelClass}>年紀 (歲)</label>
-            <input
-              required
-              type="number"
-              className={inputClass}
-              placeholder="數字"
-              value={formData.age}
-              onChange={e => setFormData({ ...formData, age: e.target.value })}
-            />
-          </div>
-          <div>
-            <label className={labelClass}>所在地區</label>
-            <input
-              required
-              type="text"
-              className={inputClass}
-              placeholder="例如：台北市大安區"
-              value={formData.location}
-              onChange={e => setFormData({ ...formData, location: e.target.value })}
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className={labelClass}>飲食注意事項</label>
-          <textarea
-            className={`${inputClass} h-32 resize-none`}
-            placeholder="例如：對什麼過敏、固定餵食量等..."
-            value={formData.dietaryNotes}
-            onChange={e => setFormData({ ...formData, dietaryNotes: e.target.value })}
-          ></textarea>
-        </div>
-
-        <button
-          type="submit"
-          className="w-full bg-primary text-white py-4 rounded-xl font-bold text-xl hover:bg-orange-600 shadow-clay hover:scale-[1.02] transition-all active:scale-[0.98] border-b-4 border-orange-700 active:border-b-0 active:translate-y-1 mt-4"
-        >
-          刊登寵物
-        </button>
-      </form>
-    </div>
-  );
+                <Button
+                    label="刊登寵物"
+                    onPress={() => onSubmit(formData)}
+                    variant="primary"
+                    size="lg"
+                    className="mt-4"
+                />
+            </View>
+        </View>
+    );
 };
 
-export const RenterForm: React.FC<{ onSubmit: (data: any) => void, isDarkMode?: boolean }> = ({ onSubmit, isDarkMode }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    gender: '女',
-    age: '',
-    bio: '',
-  });
+export const RenterForm: React.FC<{ onSubmit: (data: any) => void }> = ({ onSubmit }) => {
+    const { colorScheme } = useColorScheme();
+    const isDarkMode = colorScheme === 'dark';
+    const [formData, setFormData] = useState({
+        name: '',
+        gender: '女',
+        age: '',
+        bio: '',
+    });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit(formData);
-  };
+    const inputClass = `w-full px-5 py-4 rounded-2xl font-medium mb-4 border-2 border-transparent ${isDarkMode ? 'bg-slate-800 text-white placeholder-slate-500' : 'bg-gray-50 text-gray-900 placeholder-gray-400'}`;
+    const labelClass = `text-sm font-bold mb-2 ml-1 ${isDarkMode ? 'text-slate-300' : 'text-gray-600'}`;
 
-  const inputClass = `w-full px-5 py-4 rounded-2xl outline-none transition-all font-medium ${isDarkMode ? 'bg-slate-800 text-white shadow-clay-inset placeholder-slate-500' : 'bg-gray-50 text-gray-900 shadow-clay-inset placeholder-gray-400 focus:shadow-none focus:ring-4 focus:ring-blue-100'} border-2 border-transparent focus:border-blue-300`;
-  const labelClass = `block text-sm font-bold mb-2 ml-1 ${isDarkMode ? 'text-slate-300' : 'text-gray-600'}`;
+    return (
+        <View className={`rounded-[32px] p-6 mb-6 ${isDarkMode ? 'bg-slate-900' : 'bg-white'}`}>
+            <View className="items-center mb-8">
+                <View className={`w-20 h-20 rounded-full mb-4 justify-center items-center ${isDarkMode ? 'bg-blue-900/40' : 'bg-blue-50'}`}>
+                    <FontAwesome name="user" size={32} color={isDarkMode ? '#60A5FA' : '#2563EB'} />
+                </View>
+                <Text className={`text-2xl font-black font-display mb-2 text-center ${isDarkMode ? 'text-white' : 'text-text-main'}`}>
+                    成為陪伴者
+                </Text>
+                <Text className={`text-base font-medium text-center ${isDarkMode ? 'text-slate-400' : 'text-gray-500'}`}>
+                    分享您的愛心，陪伴可愛的毛孩度過快樂時光
+                </Text>
+            </View>
 
-  return (
-    <div className={`rounded-[2rem] p-8 max-w-2xl mx-auto transition-colors duration-300 ${isDarkMode ? 'bg-slate-900 shadow-clay-dark' : 'bg-white shadow-clay'}`}>
-      <div className="text-center mb-10">
-        <div className={`inline-flex items-center justify-center w-20 h-20 rounded-full mb-6 ${isDarkMode ? 'bg-blue-900/40 text-blue-400 shadow-clay-inset' : 'bg-blue-50 text-cta shadow-clay'}`}>
-          <i className="fas fa-user-check fa-3x transform rotate-6"></i>
-        </div>
-        <h2 className={`text-3xl font-black font-display mb-3 ${isDarkMode ? 'text-white' : 'text-text-main'}`}>成為陪伴者</h2>
-        <p className={`text-lg font-medium ${isDarkMode ? 'text-slate-400' : 'text-gray-500'}`}>分享您的愛心，陪伴可愛的毛孩度過快樂時光</p>
-      </div>
+            <View className="space-y-4">
+                <View>
+                    <Text className={labelClass}>真實姓名</Text>
+                    <TextInput
+                        className={inputClass}
+                        placeholder="輸入您的姓名"
+                        placeholderTextColor={isDarkMode ? '#64748b' : '#9ca3af'}
+                        value={formData.name}
+                        onChangeText={t => setFormData({ ...formData, name: t })}
+                    />
+                </View>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className={labelClass}>真實姓名</label>
-            <input
-              required
-              type="text"
-              className={inputClass}
-              placeholder="輸入您的姓名"
-              value={formData.name}
-              onChange={e => setFormData({ ...formData, name: e.target.value })}
-            />
-          </div>
-          <div>
-            <label className={labelClass}>性別</label>
-            <div className="relative">
-              <select
-                className={`${inputClass} appearance-none cursor-pointer`}
-                value={formData.gender}
-                onChange={e => setFormData({ ...formData, gender: e.target.value })}
-              >
-                <option value="男">男</option>
-                <option value="女">女</option>
-                <option value="其他">其他</option>
-              </select>
-              <div className={`absolute right-5 top-1/2 transform -translate-y-1/2 pointer-events-none ${isDarkMode ? 'text-slate-400' : 'text-gray-500'}`}>
-                <i className="fas fa-chevron-down"></i>
-              </div>
-            </div>
-          </div>
-          <div>
-            <label className={labelClass}>年齡</label>
-            <input
-              required
-              type="number"
-              className={inputClass}
-              placeholder="您的年齡"
-              value={formData.age}
-              onChange={e => setFormData({ ...formData, age: e.target.value })}
-            />
-          </div>
-          <div className="flex items-end pb-3">
-            <div className="flex items-center space-x-2 text-green-500 font-bold text-sm bg-green-50 px-3 py-2 rounded-lg">
-              <i className="fas fa-shield-alt"></i>
-              <span>通過加密身分驗證系統</span>
-            </div>
-          </div>
-        </div>
+                <View>
+                    <Text className={labelClass}>性別 (選擇)</Text>
+                    <View className="flex-row space-x-4 mb-4">
+                        {['男', '女', '其他'].map((option) => (
+                            <Pressable
+                                key={option}
+                                onPress={() => setFormData({ ...formData, gender: option })}
+                                className={`flex-1 py-3 items-center rounded-xl border-2 ${formData.gender === option
+                                    ? 'border-cta bg-blue-50'
+                                    : isDarkMode ? 'border-slate-700 bg-slate-800' : 'border-gray-200 bg-gray-50'
+                                    }`}
+                            >
+                                <Text className={`font-bold ${formData.gender === option ? 'text-cta' : isDarkMode ? 'text-slate-400' : 'text-gray-500'}`}>
+                                    {option}
+                                </Text>
+                            </Pressable>
+                        ))}
+                    </View>
+                </View>
 
-        <div>
-          <label className={labelClass}>自我介紹 / 養狗經驗</label>
-          <textarea
-            required
-            className={`${inputClass} h-32 resize-none`}
-            placeholder="告訴飼主為什麼您是最好的陪伴人選..."
-            value={formData.bio}
-            onChange={e => setFormData({ ...formData, bio: e.target.value })}
-          ></textarea>
-        </div>
+                <View>
+                    <Text className={labelClass}>年齡</Text>
+                    <TextInput
+                        className={inputClass}
+                        placeholder="您的年齡"
+                        keyboardType="numeric"
+                        placeholderTextColor={isDarkMode ? '#64748b' : '#9ca3af'}
+                        value={formData.age}
+                        onChangeText={t => setFormData({ ...formData, age: t })}
+                    />
+                </View>
 
-        <button
-          type="submit"
-          className="w-full bg-cta text-white py-4 rounded-xl font-bold text-xl hover:bg-blue-600 shadow-clay hover:scale-[1.02] transition-all active:scale-[0.98] border-b-4 border-blue-700 active:border-b-0 active:translate-y-1 mt-4"
-        >
-          送出身分驗證並加入
-        </button>
-      </form>
-    </div>
-  );
+                <View className="flex-row items-center mb-4 bg-green-50 p-3 rounded-lg">
+                    <FontAwesome name="shield" size={14} color="#22c55e" className="mr-2" />
+                    <Text className="text-green-600 font-bold text-sm">通過加密身分驗證系統</Text>
+                </View>
+
+                <View>
+                    <Text className={labelClass}>自我介紹 / 養狗經驗</Text>
+                    <TextInput
+                        className={`${inputClass} h-32`}
+                        multiline
+                        textAlignVertical="top"
+                        placeholder="告訴飼主為什麼您是最好的陪伴人選..."
+                        placeholderTextColor={isDarkMode ? '#64748b' : '#9ca3af'}
+                        value={formData.bio}
+                        onChangeText={t => setFormData({ ...formData, bio: t })}
+                    />
+                </View>
+
+                <Button
+                    label="送出身分驗證並加入"
+                    onPress={() => onSubmit(formData)}
+                    variant="cta"
+                    size="lg"
+                    className="mt-4"
+                />
+            </View>
+        </View>
+    );
 };
